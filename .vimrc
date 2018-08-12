@@ -39,7 +39,7 @@ nnoremap tl  :<C-u>tags<CR>
 "==========================
 "view
 "==========================
-colorscheme darkblue
+colorscheme evening
 set number
 set title
 "set visualbell

@@ -39,38 +39,44 @@ nnoremap tl  :<C-u>tags<CR>
 "==========================
 "view
 "==========================
-colorscheme evening
+colorscheme molokai
+"行番号表示
 set number
+"タイトルを表示
 set title
-"set visualbell
+"画面の端から5行目でスクロール
 set scrolloff=5
 
+"現在の行を強調表示
 if v:version >= 700
     set cursorline
     highlight CursorLine guibg=lightblue ctermbg=lightgray
 endif
 
-"vim 7.3~
-if v:version >= 730
-    set relativenumber  "相対的な行数の違いを表示してくれる。
-    set undofile    "<FILENAME>.un~ ファイルを生成する。
-endif
 set cmdheight=2
 
 
 "==========================
 "Searching and Moving
 "==========================
+"メタ文字を\で前置きせずに使えるようにする
 nnoremap / /\v
 vnoremap / /\v
+"大文字小文字区別せず検索
 set ignorecase
+"検索文字列に大文字が含まれていれば区別して検索
 set smartcase
 set gdefault    " %s/hoge/foo/gを%s/hoge/foo/でできる。常にglobal。
+"検索文字列を順次ヒットさせる
 set incsearch
+"対応する括弧にカーソルが飛ぶ
 set showmatch
+"検索結果をハイライト表示
 set hlsearch
+"検索文字列が最後まで行ったら最初に戻る
 set wrapscan
-
+" ESC連打でハイライト解除
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "検索状態からすぐ抜ける
 nnoremap <leader><space> :noh<cr>
 
@@ -90,13 +96,7 @@ cnoremap <expr> ?
 "==========================
 set wrap
 
-"横幅を79文字にする
-" set textwidth=79
-
 set formatoptions=qrn1
-if v:version >= 730
-    set colorcolumn=85 "色づけ
-endif
 
 "==========================
 "Key Bind
@@ -170,10 +170,18 @@ nnoremap <leader>t :Tlist<CR>
 " NERDTreeを表示
 nnoremap <leader>n :NERDTree<CR>
 
+" マウス操作の有効化 & ホイール操作の有効化
+set mouse=a
+set ttymouse=xterm2
+
+"大文字Yで行末までヤンク
+nnoremap Y y$
+
 "==========================
 "language
 "==========================
 
+"UTF-8化
 set encoding=utf-8
 
 if has('win32') && has('kaoriya')
@@ -309,6 +317,7 @@ highlight specialKey ctermfg=darkgray
 set backspace=indent,eol,start
 set formatoptions+=mM
 set autoindent
+"smartindentの設定
 set smartindent
 
 "==========================
@@ -331,9 +340,10 @@ set grepprg=internal "内蔵grep
 "==========================
 set autowrite
 set hidden
+"スワップファイルを作らない
 set noswapfile
-"set backup
-"set backupdir=$HOME/.vimback
+"バックアップファイルを作らない
+set nobackup
 set directory=$HOME/.vimtmp
 set history=10000
 set updatetime=500
@@ -345,8 +355,12 @@ let g:svbfre = '.\+'
 "Status Line
 "==========================
 set showcmd "ステータスラインにコマンドを表示
-set laststatus=2 "ステータスラインを常に表示
-set statusline=[%L]\ %t\ %y%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%r%m%=%c:%l/%L "ステータスラインの表示内容
+"ステータスラインの有効化&2行表示
+set laststatus=2
+" ステータスラインのテーマ設定
+let g:lightline = { 'colorscheme': 'molokai' }
+"ステータスラインの表示内容
+set statusline=[%L]\ %t\ %y%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%r%m%=%c:%l/%L 
 
 
 "==========================
@@ -364,7 +378,8 @@ autocmd FileType php :set dictionary=~/.dictionary/phpdoc
 "==========================
 "File Type
 "==========================
-syntax on "シンタックスハイライト
+"シンタックスハイライトの有効化
+syntax on
 au FileType perl call PerlType()
 "" ファイルタイプに応じてテンプレートを自動読み込み
 autocmd BufNewFile * silent! 0r $HOME/.vim/templates/%:e.tpl
@@ -373,8 +388,8 @@ autocmd BufNewFile * silent! 0r $HOME/.vim/templates/%:e.tpl
 
 
 
-"visualeditの設定
-"set virtualedit+=block
+"行末まで移動可能
+set virtualedit=onemore
 
 " ---------------------------
 "python

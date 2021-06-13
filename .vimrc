@@ -106,6 +106,12 @@ noremap <C-c><C-c> <C-c>
 noremap <C-c><C-e>e :edit $HOME/.vimrc<CR>
 noremap <C-c><C-e>s :source $HOME/.vimrc<CR>
 
+" 表示行単位で上下移動
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+
 " 検索箇所を真ん中に
 noremap n nzz
 noremap N Nzz
@@ -147,10 +153,13 @@ nnoremap <C-l> <C-w>l
 map <S-Enter> O<ESC>
 map <Enter> o<ESC>
 
-" Creating underline/overline headings for markup languages
+" マークアップのための上線や下線を作成する
 " Inspired by http://sphinx.pocoo.org/rest.html#sections
+"================================
 nnoremap <leader>1 yyPVr=jyypVr=
+"********************************
 nnoremap <leader>2 yyPVr*jyypVr*
+"--------------------------------
 nnoremap <leader>3 yyPVr-jyypVr-
 nnoremap <leader>4 yypVr=
 nnoremap <leader>5 yypVr-
@@ -162,20 +171,13 @@ nnoremap <leader>7 yypVr"
 nnoremap <Space>m :<C-u>marks
 nnoremap <Space>r :<C-u>registers
 
-"BundleSearchへのショートカット
-nnoremap <Space>s :BundleSearch<Space>
-
-" TagListを表示
-nnoremap <leader>t :Tlist<CR>
-" NERDTreeを表示
-nnoremap <leader>n :NERDTree<CR>
-
 " マウス操作の有効化 & ホイール操作の有効化
 set mouse=a
 set ttymouse=xterm2
 
 "大文字Yで行末までヤンク
 nnoremap Y y$
+
 
 "==========================
 "language
@@ -278,7 +280,6 @@ function! MyFoldText()
     return line . ' …' . repeat(" ",fillcharcount) . foldedlinecount . ' '
 endfunction
 set foldtext=MyFoldText()
-" }}}
 
 " ******************************
 "            Leader
@@ -304,7 +305,7 @@ set clipboard+=autoselect
 
 
 "==========================
-"special Key 
+"special Key
 "==========================
 set list
 set listchars=tab:>-,trail:-,extends:<,precedes:<
@@ -312,7 +313,7 @@ highlight specialKey ctermfg=darkgray
 
 
 "==========================
-"Input 
+"Input
 "==========================
 set backspace=indent,eol,start
 set formatoptions+=mM
@@ -360,7 +361,7 @@ set laststatus=2
 " ステータスラインのテーマ設定
 let g:lightline = { 'colorscheme': 'molokai' }
 "ステータスラインの表示内容
-set statusline=[%L]\ %t\ %y%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%r%m%=%c:%l/%L 
+set statusline=[%L]\ %t\ %y%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%r%m%=%c:%l/%L
 
 
 "==========================
@@ -400,7 +401,7 @@ if has('autocmd')
     autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
 endif
 
-" Execute python script C-P 
+" Execute python script C-P
 function! s:ExecPy()
     exe "!" . &ft . " %"
 :endfunction
@@ -423,9 +424,6 @@ if has('autocmd')
 endif
 
 "==========================
-"help 
+"help
 "==========================
 set helplang=ja,en "日本語のヘルプｰ>英語のヘルプの順に検索
-
-
-
